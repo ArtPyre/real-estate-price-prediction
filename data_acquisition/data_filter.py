@@ -1,5 +1,6 @@
 
 attributes = (
+    "id", #0
     "Locality", 
     "Type of property", 
     "Subtype of property", 
@@ -9,9 +10,11 @@ attributes = (
     "Living Area", 
     "Fully equipped kitchen",
     "Furnished",
-    "Open fire",
+    "Open fire", #10
     "Terrace",
+    "Terrace area",
     "Garden",
+    "Garden area",
     "Surface of the land",
     "Surface area of the plot of land",
     "Number of facades",
@@ -20,18 +23,21 @@ attributes = (
 )
 
 immoweb_attributes = (
+    "id", #0
     "Locality",
     "Type of property",
     "Subtype of property",
-    "Prix",
+    "Price",
     "Type of sale",
     "Chambres",
     "Surface habitable",
     "Type de cuisine",
-    "Meublé",
-    "Combien de feux ouverts ?",
+    "Meublé", 
+    "Combien de feux ouverts ?", #10
+    "Terrasse", 
     "Surface de la terrasse",
-    "Surface du jardin",
+    "Jardin",
+    "Surface du jardin", 
     "Surface du terrain",
     "Surface area of the plot of land",
     "Nombre de façades",
@@ -43,58 +49,86 @@ def immoweb_filter(datas) :
     my_dict = dict()
     for attr, immo_attr in zip(attributes, immoweb_attributes) :
         if(immo_attr in datas.keys()) :
-            if(attr in attributes[10:12]) :
-                my_dict[attr] = True
-                my_dict[attr + " area"] = int(datas[immo_attr].split(" ")[0])
-            elif(attr in attributes[8] or attr in attributes[15]) :
+            if(attr in attributes[9] or attr in attributes[11] or attr in attributes[13] or attr in attributes[18]) :
                 if(datas[immo_attr] == "Oui") :
-                    my_dict[attr] = True
+                    my_dict[attr] = 1
                 else :
-                    my_dict[attr] = False
-            elif(attr in attributes[9]):
+                    my_dict[attr] = 0
+            elif(attr in attributes[4]) :
+                my_dict[attr] = int(datas[immo_attr].replace("€",""))
+            elif(attr in attributes[10]):
                 if(int(datas[immo_attr]) > 0):
-                    my_dict[attr] = True
+                    my_dict[attr] = 1
                 else :
-                    my_dict[attr] = False
-            elif(attr in attributes[3] or attr in attributes[5:7] or attr in attributes[12:15]) :
-                my_dict[attr] = int(datas[immo_attr].replace(".","").split(" ")[0])
-            elif(attr in attributes[7]) :
+                    my_dict[attr] = 0
+            elif(attr in attributes[6:8] or attr in attributes[12] or attr in attributes[14:17]) :
+                try :
+                   my_dict[attr] = int(datas[immo_attr].replace(".","").split(" ")[0])
+                except :
+                    my_dict[attr] = datas[immo_attr]
+            elif(attr in attributes[8]) :
                 if(datas[immo_attr].find("Pas équipée") > -1) :
-                    my_dict[attr] = False
+                    my_dict[attr] = 0
                 else :
-                    my_dict[attr] = True
+                    my_dict[attr] = 1
             else : 
                 my_dict[attr] = datas[immo_attr]
         else :
-            if(attr in attributes[10:12]) :
-                my_dict[attr] = False
-                my_dict[attr + " area"] = None
-            elif(attr in attributes[7:10] or attr in attributes[15]) :
-                my_dict[attr] = False
+            if(attr in attributes[8:11] or attr in attributes[18]) :
+                my_dict[attr] = 0
+            elif (attr in attributes[11]) :
+                if(immoweb_attributes[12] in datas.keys()) :
+                    my_dict[attr] = 1
+                else :
+                    my_dict[attr] = 0
+            elif (attr in attributes[13]) :
+                if(immoweb_attributes[14] in datas.keys()) :
+                    my_dict[attr] = 1
+                else :
+                    my_dict[attr] = 0
             else :
                 my_dict[attr] = None
     
     return my_dict
 
 
-    test = {
-    'Locality': 'Deinze', 
-    'Type of property': 'maison', 
-    'Subtype of property': None, 
-    'Price': 353276, 
-    'Type of sale': 'a-vendre', 
-    'Number of rooms': 3,
-    'Living Area': 159,
-    'Fully equipped kitchen': False,
-    'Furnished': False,
-    'Open fire': False,
-    'Terrace': True,
-    'Terrace area': 12,
-    'Garden': False,
-    'Garden area': None,
-    'Surface of the land': 159,
-    'Surface area of the plot of land': 250,
-    'Number of facades': 2,
-    'Swimming pool': False,
-    'State of the building': 'Excellent état'
-    }
+house_sub_properties = (
+    "Bungalow",
+    "Château",
+    "Maison de campagne",
+    "Immeuble à appartements",
+    "Maison bel-étage",
+    "Villa",
+    "Manoir",
+    "Chalet",
+    "Ferme",
+    "Bien exceptionnel",
+    "Immeuble mixte",
+    "Maison de maître",
+    "Autres biens",
+    "Pavillon"
+)
+
+appartement_sub_properties = (
+    "Rez-de-chaussée",
+    "Triplex",
+    "Penthouse",
+    "Logmement étudiant",
+    "Duplex",
+    "Studio",
+    "Loft",
+    "Appartement de service"
+)
+
+def get_properties(type) :
+    if(type == "Maison") :
+        return {"Type of property" : type, "Subtype of property" : None}
+    elif(type == "Appartement") :
+        return {"Type of property" : type, "Subtype of property" : None}
+    else :
+        if(type in house_sub_properties) :
+            return {"Type of property" : "Maison", "Subtype of property" : type}
+        elif(type in appartement_sub_properties) :
+            return {"Type of property" : "Appartement", "Subtype of property" : type}
+        else:
+            return {"Type of property" : None, "Subtype of property" : None}
