@@ -1,6 +1,6 @@
-import df_attributes
+import data_acquisition.df_attributes as df
 
-attributes = tuple(df_attributes.attributes)
+attributes = tuple(df.attributes)
 
 immoweb_attributes = (
     "id", #0
