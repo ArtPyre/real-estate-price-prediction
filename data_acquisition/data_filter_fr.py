@@ -1,33 +1,13 @@
+import df_attributes
 
-attributes = (
-    "id", #0
-    "Locality", 
-    "Type of property", 
-    "Subtype of property", 
-    "Price", 
-    "Type of sale", 
-    "Number of rooms", 
-    "Living Area", 
-    "Fully equipped kitchen",
-    "Furnished",
-    "Open fire", #10
-    "Terrace",
-    "Terrace area",
-    "Garden",
-    "Garden area",
-    "Surface of the land",
-    "Surface area of the plot of land",
-    "Number of facades",
-    "Swimming pool",
-    "State of the building"
-)
+attributes = tuple(df_attributes.attributes)
 
 immoweb_attributes = (
     "id", #0
     "Locality",
     "Type of property",
     "Subtype of property",
-    "Price",
+    "Price_attr",
     "Type of sale",
     "Chambres",
     "Surface habitable",
@@ -39,7 +19,6 @@ immoweb_attributes = (
     "Jardin",
     "Surface du jardin", 
     "Surface du terrain",
-    "Surface area of the plot of land",
     "Nombre de façades",
     "Piscine",
     "État du bâtiment"
@@ -49,23 +28,29 @@ def immoweb_filter(datas) :
     my_dict = dict()
     for attr, immo_attr in zip(attributes, immoweb_attributes) :
         if(immo_attr in datas.keys()) :
-            if(attr in attributes[9] or attr in attributes[11] or attr in attributes[13] or attr in attributes[18]) :
+            if(attr in attributes[9] or attr in attributes[11] or attr in attributes[13] or attr in attributes[17]) :
                 if(datas[immo_attr] == "Oui") :
                     my_dict[attr] = 1
                 else :
                     my_dict[attr] = 0
             elif(attr in attributes[4]) :
-                my_dict[attr] = int(datas[immo_attr].replace("€",""))
+                try :
+                    my_dict[attr] = int(datas[immo_attr].split(" ")[0].replace("€",""))
+                except :
+                    my_dict[attr] = None
             elif(attr in attributes[10]):
-                if(int(datas[immo_attr]) > 0):
-                    my_dict[attr] = 1
-                else :
-                    my_dict[attr] = 0
+                try :
+                    if(int(datas[immo_attr]) > 0):
+                        my_dict[attr] = 1
+                    else :
+                        my_dict[attr] = 0
+                except :
+                    my_dict[attr] = None
             elif(attr in attributes[6:8] or attr in attributes[12] or attr in attributes[14:17]) :
                 try :
                    my_dict[attr] = int(datas[immo_attr].replace(".","").split(" ")[0])
                 except :
-                    my_dict[attr] = datas[immo_attr]
+                    my_dict[attr] = None
             elif(attr in attributes[8]) :
                 if(datas[immo_attr].find("Pas équipée") > -1) :
                     my_dict[attr] = 0
@@ -74,7 +59,7 @@ def immoweb_filter(datas) :
             else : 
                 my_dict[attr] = datas[immo_attr]
         else :
-            if(attr in attributes[8:11] or attr in attributes[18]) :
+            if(attr in attributes[8:11] or attr in attributes[17]) :
                 my_dict[attr] = 0
             elif (attr in attributes[11]) :
                 if(immoweb_attributes[12] in datas.keys()) :
@@ -90,7 +75,6 @@ def immoweb_filter(datas) :
                 my_dict[attr] = None
     
     return my_dict
-
 
 house_sub_properties = (
     "Bungalow",
@@ -132,3 +116,4 @@ def get_properties(type) :
             return {"Type of property" : "Appartement", "Subtype of property" : type}
         else:
             return {"Type of property" : None, "Subtype of property" : None}
+
