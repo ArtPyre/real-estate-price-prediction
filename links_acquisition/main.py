@@ -89,7 +89,7 @@ def main(_query: str, _max_page_counter: int) -> list[str]:
     try_cookie(driver)          # Try to click the cookie
     driver.implicitly_wait(1)   # Wait for the page to load
 
-    logfile = f"./logs/Log_file_{_query}.txt"       # Create a log file name for each thread
+    logfile = f"./links_acquisition/logs/Log_file_{_query}.txt"       # Create a log file name for each thread
     with open(logfile, 'w') as input_file:          # Open log file
 
         start_time = perf_counter()
@@ -119,7 +119,6 @@ def main(_query: str, _max_page_counter: int) -> list[str]:
                 driver.close()
     return query_list_links
 
-
 def task(_query: str, _max_number_of_page: int):
     #gather_results wrapped in a task
     print(threading.current_thread().getName(), 'Starting')
@@ -141,7 +140,7 @@ def start_threads():
 threads = list()
 cpu_count = cpu_count()
 maxthreads = cpu_count
-max_number_of_page = 4
+max_number_of_page = 2
 smphr = threading.Semaphore(value = maxthreads)
 
 # Launch Scrap threading job
@@ -151,4 +150,4 @@ start_threads()
 end_scrapping = perf_counter()
 print(f"Total time : {round((end_scrapping - start_scrapping), 2)} seconds, or {round((round((end_scrapping - start_scrapping), 2)/60), 2)} minutes,")
 print(f"{len(list_links)} links collected 👌, {round((end_scrapping - start_scrapping)/len(list_links), 2)} sec per link,")
-print_to_textfile(list_links,'./list_of_results.txt')
+print_to_textfile(list_links,'./links_acquisition/test_list_of_results.txt')

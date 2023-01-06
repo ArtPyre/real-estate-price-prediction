@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+links_acquisition/logs/**
+links_acquisition/test_list_of_results.txt
 
 # C extensions
 *.so
