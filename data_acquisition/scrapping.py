@@ -53,7 +53,6 @@ def immoweb_fr_scrapping(url, my_dict):
 def immoweb_en_scrapping(url, my_dict):
 
     options = webdriver.FirefoxOptions()
-    options.add_argument("--headless")
     driver = webdriver.Firefox(options=options)
     driver.get(url)
 
