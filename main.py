@@ -1,7 +1,9 @@
 import data_acquisition.scrapping as scrap
+from multiprocessing import cpu_count
 import threading
 import time
 import json
+
 
 def write_values_json (input_file) :
     with (open("./data_acquisition/data_test.json", "a")) as outpout_file :
@@ -12,17 +14,17 @@ def write_values_json (input_file) :
 
 start_process = time.perf_counter() 
 threads = list()
-maxthreads = 5
+maxthreads = cpu_count()
 smphr = threading.Semaphore(value=maxthreads)
 
 def task(SomeInput):
     with smphr:
         write_values_json(SomeInput)
-        time.sleep(2)
+        time.sleep(0.1)
 
 filename = "./links_acquisition/list_of_results.txt"
 with (open(filename, "r")) as input_file :
-    threads = [threading.Thread(name="worker/task", target=task, args=(input_file,)) for i in range(0,100)]
+    threads = [threading.Thread(name="worker/task", target=task, args=(input_file,)) for i in range(0,10)] #change range for the number of values
     for thread in threads:
         thread.start()
     for thread in threads:
