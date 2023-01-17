@@ -1,4 +1,4 @@
-import data_acquisition.scrapping as scrap
+import scrapping as scrap
 from multiprocessing import cpu_count
 import threading
 import time
@@ -24,7 +24,7 @@ def task(SomeInput):
 
 filename = "./links_acquisition/list_of_results.txt"
 with (open(filename, "r")) as input_file :
-    threads = [threading.Thread(name="worker/task", target=task, args=(input_file,)) for i in range(0,10)] #change range for the number of values
+    threads = [threading.Thread(name="worker/task", target=task, args=(input_file,)) for i in range(0,10)] #change range for the number of pages to scrap
     for thread in threads:
         thread.start()
     for thread in threads:
