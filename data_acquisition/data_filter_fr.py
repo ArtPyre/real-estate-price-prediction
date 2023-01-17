@@ -1,4 +1,4 @@
-import data_acquisition.df_attributes as df
+import df_attributes as df
 
 attributes = tuple(df.attributes)
 

@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import data_acquisition.data_filter_fr as fr
-import data_acquisition.data_filter_en as en
+import data_filter_fr as fr
+import data_filter_en as en
 
 def immoweb_scrapping(url):
     if("projet" in url or "project" in url):
