@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 import data_filter_fr as fr
 import data_filter_en as en
 
+#Verify is the URL is correct and find the language of the page
 def immoweb_scrapping(url):
     if("projet" in url or "project" in url):
         pass
@@ -19,6 +20,7 @@ def immoweb_scrapping(url):
         else :
             pass
 
+#Search in a english immoweb page with Selenium for all the required datas
 def immoweb_fr_scrapping(url, my_dict):
 
     options = webdriver.FirefoxOptions()
@@ -51,6 +53,7 @@ def immoweb_fr_scrapping(url, my_dict):
 
     return fr.immoweb_filter(my_dict)
 
+#Search in a french immoweb page with Selenium for all the required datas
 def immoweb_en_scrapping(url, my_dict):
 
     options = webdriver.FirefoxOptions()

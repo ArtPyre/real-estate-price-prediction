@@ -1,39 +1,44 @@
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import GradientBoostingRegressor
 import matplotlib.pyplot as plt
 
+#Create a Random Forest Regressor and take the datas to make a model with this, 
+#save a graph on the Linear Regression and return the score
 def random_forest_model (X, y) :
     X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2)
-    X_train = X_train.reshape(-1, 1)
-    X_test = X_test.reshape(-1, 1)
 
-    regression = RandomForestRegressor()
-    regression.fit(X_train,y_train)
+    rfr = RandomForestRegressor()
+    rfr.fit(X_train,y_train)
+    y_pred = rfr.predict(X_test)
 
-    regression.predict(X_test)
-
-    return regression.score(X_test, y_test)
-
-
-def linear_regression_model (X, y) :
-    X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2)  
-    X_train = X_train.reshape(-1, 1)
-    X_test = X_test.reshape(-1, 1)
-    regression = LinearRegression()
-    regression.fit(X_train, y_train)
-
-    plt.scatter(X_train, y_train)
-    plt.plot(X_train,regression.predict(X_train), color='red')
-    plt.title("Living_Area VS Price (Training set)")
-    plt.ylabel("Living_Area")
+    plt.scatter(y_test, y_pred) 
+    plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()],color='r')
+    plt.title("Correlation line")
+    plt.ylabel("Price predicted")
     plt.xlabel("Price")
-    plt.xlim(0,1001000)
-    plt.ylim(0,400)
-    plt.savefig("./model_training/graphs/Living_Arae_VS_Price_Linear.png")
+    plt.savefig("./model_training/graphs/RFR_Graph.png")
+    plt.show()
 
-    regression.predict(X_test)
+    return rfr.score(X_test, y_test)
+
+#Create a Gradient Boosting Regressor and take the datas to make a model with this, 
+#save a graph on the Linear Regression and return the score
+def gradient_boosting_regression_model (X, y) :
+    X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2) 
+
+    gdr = GradientBoostingRegressor()
+    gdr.fit(X_train, y_train)
+    y_pred = gdr.predict(X_test)
+
+    plt.scatter(y_test, y_pred) 
+    plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()],color='r')
+    plt.title("Correlation line")
+    plt.ylabel("Price predicted")
+    plt.xlabel("Price")
+    plt.savefig("./model_training/graphs/GDR_Graph.png")
+    plt.show()
     
-    return regression.score(X_test, y_test)
+    return gdr.score(X_test, y_test)
 
 

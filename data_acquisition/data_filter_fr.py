@@ -2,6 +2,7 @@ import df_attributes as df
 
 attributes = tuple(df.attributes)
 
+#All HTML attributes in Immoweb
 immoweb_attributes = (
     "id", #0
     "Locality",
@@ -24,6 +25,7 @@ immoweb_attributes = (
     "État du bâtiment"
 )
 
+#Filter the needed datas to avoid errors in the dataset
 def immoweb_filter(datas) :
     my_dict = dict()
     for attr, immo_attr in zip(attributes, immoweb_attributes) :
@@ -76,6 +78,7 @@ def immoweb_filter(datas) :
     
     return my_dict
 
+#All Immoweb house subtypes
 house_sub_properties = (
     "Bungalow",
     "Château",
@@ -93,6 +96,7 @@ house_sub_properties = (
     "Pavillon"
 )
 
+#All Immoweb appartment subtypes
 appartement_sub_properties = (
     "Rez-de-chaussée",
     "Triplex",
@@ -104,6 +108,7 @@ appartement_sub_properties = (
     "Appartement de service"
 )
 
+#Get the right property and subtype
 def get_properties(type) :
     if(type == "Maison") :
         return {"Type of property" : type, "Subtype of property" : None}
