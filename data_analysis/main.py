@@ -1,6 +1,5 @@
 import pandas as pd
 import os
-import json
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
@@ -73,7 +72,7 @@ def get_price_by_kitchen_type (df) :
     plt.xticks(fontsize=9)
     for i,v in enumerate(datas_count.array) :
         index = names.index(datas_count.index.tolist()[i][1])
-        plt.annotate(v, (index,0), ha='center',xytext=(0,10), textcoords="offset points")
+        plt.annotate(v, (index,0), ha='center',xytext=(0,10), textcoords="offset points", fontsize=10)
     plt.savefig("./data_analysis/graphs/Kitchen_graph.png", bbox_inches="tight")
     plt.show()
 
@@ -95,8 +94,15 @@ def get_price_by_terrace_area(df):
     plt.savefig("./data_analysis/graphs/Terrace_graph.png", bbox_inches="tight")
     plt.show()
 
+def get_multi_graph (df) :
+    int_array_df = ["Price", "Locality", "Living_Area", "Number_of_facades"]
+    sns.pairplot(df, x_vars=int_array_df, y_vars=int_array_df,)
+    plt.savefig("./data_analysis/graphs/Multi_graph.png", bbox_inches="tight")
+    plt.show()
+
 get_price_by_kitchen_type(df)
 get_price_by_terrace_area(df)
 get_price_by_subtype(df)
 get_region_properties(df)
 get_rows_columns_graph(df)
+get_multi_graph(df)

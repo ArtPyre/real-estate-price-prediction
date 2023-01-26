@@ -1,3 +1,4 @@
+#All attributes for the dataset
 attributes = (
     "id", #0
     "Locality", 
