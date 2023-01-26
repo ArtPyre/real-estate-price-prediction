@@ -38,7 +38,7 @@ Save those graphs in the "graphs" folder.
 ![Alt text](data_analysis/graphs/Kitchen_graph.png)  
 ![Alt text](data_analysis/graphs/Terrace_graph.png)  
 
-### Data analysis
+### Model training
 main.py in model_training
 
 Normalize and clean the dataset to send them for different model.
@@ -46,9 +46,11 @@ Theses models return a score and save a PNG graph to show the Linear Regression 
 
 * Random Forest Regressor :
 ![Alt text](model_training/graphs/RFR_Graph.png) 
+Max score : 74.34%
 
 * Gradient Boosting Regressor :
 ![Alt text](model_training/graphs/GDR_Graph.png) 
+Max score : 82.98
 
 
 ## Help
