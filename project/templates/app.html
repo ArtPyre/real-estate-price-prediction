@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+   <body>
+    <h1>Make your prediction !</h1>
+      <form action = "#" method = "post">
+         <p>Enter datas:</p>
+
+         <p>
+            <label for="area">Living Area* :</label>
+            <input type = "number" name = "area" required/>
+         </p>
+
+         <p>
+            <label for="property-type">Property type* :</label>
+            <select id="property-type" name="property-type" required>
+               <option value="APARTMENT" selected="selected">Apartment</option>
+               <option value="HOUSE">House</option>
+            </select>
+         </p>
+
+         <p>
+            <label for="rooms-number">Number of rooms* :</label>
+            <input type = "number" name = "rooms-number" required/>
+         </p>
+
+         <p>
+            <label for="zip-code">Zip code* :</label>
+            <input type = "number" name = "zip-code" required/>
+         </p>
+
+         <p>
+            <label for="land-area">Land Area :</label>
+            <input type = "number" name = "land-area" placeholder="0" />
+         </p>
+
+         <p>
+            <label for="garden">Garden : </label>
+            <input type="checkbox" id="garden" name="garden" value="garden" onclick="var input = document.getElementById('garden-area'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">
+            <label for="garden-area">Area : </label>
+            <input type="number" id="garden-area" name="garden-area" disabled="disabled" placeholder="0" />
+         </p>
+
+         <p>
+            <label for="equipped-kitchen">Equiped kitchen : </label>
+            <input type="checkbox" id="equipped-kitchen" name="equipped-kitchen" value="equipped-kitchen">
+         </p>
+
+         <p>
+            <label for="full-address">Full address :</label>
+            <input type = "text" name = "full-address" value=""/>
+         </p>
+
+         <p>
+            <label for="swimming-pool">Swimming pool : </label>
+            <input type="checkbox" id="swimming-pool" name="swimming-pool" value="swimming-pool">
+         </p>
+
+         <p>
+            <label for="furnished">Furnished : </label>
+            <input type="checkbox" id="furnished" name="furnished" value="furnished">
+         </p>
+
+         <p>
+            <label for="open-fire">Open fire : </label>
+            <input type="checkbox" id="open-fire" name="open-fire" value="open-fire">
+         </p>
+
+         <p>
+            <label for="terrace">Terrace : </label>
+            <input type="checkbox" id="terrace" name="terrace" value="terrace" onclick="var input = document.getElementById('terrace-area'); if(this.checked){ input.disabled = false; input.focus();}else{input.disabled=true;}">
+            <label for="terrace-area">Area : </label>
+            <input type="number" id="terrace-area" name="terrace-area" disabled="disabled" placeholder="0" />
+         </p>
+
+         <p>
+            <label for="facades-number">Number of facades :</label>
+            <input type = "number" name = "facades-number" placeholder="0" />
+         </p>
+
+         <p>
+            <label for="building-state">Building state :</label>
+            <select id="building-state" name="building-state">
+               <option value="" selected="selected"> Choose a state </option>
+               <option value="NEW"> New </option>
+               <option value="GOOD"> Good </option>
+               <option value="TO RENOVATE"> To renovate </option>
+               <option value="JUST RENOVATED"> Just renovated </option>
+               <option value="TO REBUILD"> To rebuild </option>
+            </select>
+         </p>
+
+         <p>Values with a * are mandatory</p>
+
+         <p><input type = "submit" value = "Submit" /><input type="reset" value = "Reset"></p>
+
+         <p>{{result}}</p>
+      
+      </form>   
+   </body>
+</html>

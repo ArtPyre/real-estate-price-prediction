@@ -23,10 +23,11 @@ df = df[(df["Price"] > 10000) & (df["Price"] < 5000000)]
 df = df.fillna(0)
 
 #Get the models
-X=df.drop('Price',axis=1)
+X=df.drop(['Unnamed: 0.1','Price', 'Subtype_of_property', 'Type_of_sale', 'Fully_equipped_kitchen', 'Unnamed: 0'],axis=1)
+print(X.head())
 y=df['Price']
-print("The score of the Random Forest model is : ".format(models.random_forest_model(X, y)))
-print("The score of the Gradient Boosting model is : ".format(models.gradient_boosting_regression_model(X, y)))
+print("The score of the Random Forest model is : {}".format(models.random_forest_model(X, y)))
+print("The score of the Gradient Boosting model is : {}".format(models.gradient_boosting_regression_model(X, y)))
 
 
 
