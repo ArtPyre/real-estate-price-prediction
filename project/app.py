@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template
+import preprocessing.cleaning_data
+import predict.prediction
 app = Flask(__name__)
 
 @app.route('/')
@@ -25,7 +27,8 @@ def prediction():
          datas["open-fire"] = False
 
       datas.update(request.form.to_dict())
-      return render_template("app.html", result=datas)
+      df = preprocessing.cleaning_data.preprocess(datas)
+      return render_template("app.html", result=predict.prediction.predict(df, 'GDR_model.pkl'))
    elif(request.method == 'GET') :
       
       pass
